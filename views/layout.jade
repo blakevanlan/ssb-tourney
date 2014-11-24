@@ -1,0 +1,23 @@
+doctype html
+html
+   head
+      title SSB Tourney
+      meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
+      meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no")
+      link(href='http://fonts.googleapis.com/css?family=Alegreya+Sans+SC' rel='stylesheet' type='text/css')
+      != css("bootstrap.min")
+      
+      script(src="http://code.jquery.com/jquery.js")
+      != js("bootstrap")
+
+      block head
+
+   - var viewDir = locals.settings.views;
+   - var view = locals.filename.replace(viewDir, "").replace(".jade", "").replace(/^[\\\/]/g, "");
+   - var pageClass = view.replace(/[\\\/]/g, "-") + "-page";
+   
+   body(class=pageClass)
+      .container
+         h1 Super Smash Bros Tourney
+         p.lead A tournament bracket web app for N64 SSB
+         block content

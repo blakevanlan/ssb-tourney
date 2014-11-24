@@ -1,0 +1,25 @@
+{
+  "name": "ssb-tourney",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blakevanlan/ssb-tourney.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blakevanlan/ssb-tourney/issues"
+  },
+  "homepage": "https://github.com/blakevanlan/ssb-tourney",
+  "dependencies": {
+    "connect-assets": "^4.3.3",
+    "express": "^4.10.3",
+    "jade": "^1.7.0",
+    "mysql": "^2.5.3",
+    "stylus": "^0.49.3"
+  }
+}

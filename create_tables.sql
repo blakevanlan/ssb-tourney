@@ -1,0 +1,62 @@
+DROP TABLE IF EXISTS `player`;
+DROP TABLE IF EXISTS `tournament`;
+DROP TABLE IF EXISTS `participant`;
+DROP TABLE IF EXISTS `character`;
+DROP TABLE IF EXISTS `match`;
+DROP TABLE IF EXISTS `outcome`;
+
+CREATE TABLE  IF NOT EXISTS `player` (
+`pid` INT NOT NULL ,
+`name` VARCHAR( 100 ) NOT NULL ,
+PRIMARY KEY ( `pid` )
+) ENGINE = InnoDB;
+
+CREATE TABLE  IF NOT EXISTS `tournament` (
+`tid` INT NOT NULL ,
+`name` VARCHAR( 100 ) NOT NULL ,
+`date` DATE NOT NULL ,
+PRIMARY KEY ( `tid` )
+) ENGINE = InnoDB;
+
+CREATE TABLE  IF NOT EXISTS `participant` (
+`tid` INT NOT NULL ,
+`pid` INT NOT NULL ,
+PRIMARY KEY ( `tid`, `pid` ) ,
+FOREIGN KEY(`tid`) REFERENCES tournament(`tid`) ON DELETE CASCADE ,
+FOREIGN KEY(`pid`) REFERENCES player(`pid`) ON DELETE CASCADE
+) ENGINE = InnoDB;
+
+CREATE TABLE  IF NOT EXISTS `character` (
+`cid` INT NOT NULL ,
+`name` VARCHAR( 100 ) NOT NULL ,
+PRIMARY KEY ( `cid` )
+) ENGINE = InnoDB;
+
+CREATE TABLE  IF NOT EXISTS `match` (
+`mid` INT NOT NULL ,
+`pid1` INT NOT NULL ,
+`pid2` INT NOT NULL ,
+`cid1` INT NOT NULL ,
+`cid2` INT NOT NULL ,
+`seed` INT NOT NULL ,
+`tid` INT NOT NULL ,
+PRIMARY KEY ( `mid` ) ,
+FOREIGN KEY(`tid`) REFERENCES tournament(`tid`) ON DELETE CASCADE ,
+FOREIGN KEY(`pid1`) REFERENCES player(`pid`) ON DELETE CASCADE ,
+FOREIGN KEY(`pid2`) REFERENCES player(`pid`) ON DELETE CASCADE ,
+FOREIGN KEY(`cid1`) REFERENCES character(`cid`) ON DELETE CASCADE ,
+FOREIGN KEY(`cid2`) REFERENCES character(`cid`) ON DELETE CASCADE
+) ENGINE = InnoDB;
+
+CREATE TABLE  IF NOT EXISTS `outcome` (
+`oid` INT NOT NULL,
+`mid` INT NOT NULL ,
+`winner` INT NOT NULL ,
+`loser` INT NOT NULL ,
+`score` INT NOT NULL ,
+`time` INT NOT NULL ,
+PRIMARY KEY ( `oid` ) ,
+FOREIGN KEY(`mid`) REFERENCES match(`mid`) ON DELETE CASCADE ,
+FOREIGN KEY(`winner`) REFERENCES player(`pid`) ON DELETE CASCADE ,
+FOREIGN KEY(`loser`) REFERENCES player(`pid`) ON DELETE CASCADE
+) ENGINE = InnoDB;
