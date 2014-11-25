@@ -19,19 +19,25 @@ var connection = mysql.createConnection({
    host: 'mysql.cis.ksu.edu',
    user: 'vanlan',
    password: 'insecurepassword',
-   database: 'vanlan',
-   connectTimeout: 20000
+   database: 'vanlan'
 });
 
-console.log('Attempting to connect to mysql...');
-connection.connect(function (err) {
-   if (err) {
-      console.error('Failed to connect: ' + err.stack);
-      // return;
-   }
-   console.log('Successfully connected.')
+// console.log('Attempting to connect to mysql...');
+// connection.connect(function (err) {
+//    if (err) {
+//       console.error('Failed to connect: ' + err.stack);
+//       // return;
+//    }
+//    console.log('Successfully connected.')
 
-   // Controllers
-   app.use(require('./index')(connection));
-});
+//    // Controllers
+//    app.use(require('./index')(connection));
+//    app.use(require('./bracket')(connection));
+//    app.use(require('./player')(connection));
+//    app.use(require('./character')(connection));
+// });
 
+app.use(require('./index')(null));
+app.use(require('./bracket')(null));
+app.use(require('./player')(null));
+app.use(require('./character')(null));
