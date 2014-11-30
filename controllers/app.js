@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var app = module.exports = express();
 var mysql = require('mysql');
+var bodyParser = require('body-parser');
 
 // Settings
 app.set('view engine', 'jade');
@@ -10,7 +11,8 @@ app.set('views', path.join(__dirname, '../views'));
 
 // Middleware
 app.use(express.query());
-// app.use(express.bodyParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(require('connect-assets')());
 app.use(express.static(path.join(__dirname, '../public')));
 
@@ -22,22 +24,22 @@ var connection = mysql.createConnection({
    database: 'vanlan'
 });
 
-// console.log('Attempting to connect to mysql...');
-// connection.connect(function (err) {
-//    if (err) {
-//       console.error('Failed to connect: ' + err.stack);
-//       // return;
-//    }
-//    console.log('Successfully connected.')
+console.log('Attempting to connect to mysql...');
+connection.connect(function (err) {
+   if (err) {
+      console.error('Failed to connect: ' + err.stack);
+      return;
+   }
+   console.log('Successfully connected.')
 
-//    // Controllers
-//    app.use(require('./index')(connection));
-//    app.use(require('./bracket')(connection));
-//    app.use(require('./player')(connection));
-//    app.use(require('./character')(connection));
-// });
+   // Controllers
+   app.use(require('./index')(connection));
+   app.use(require('./tournament')(connection));
+   app.use(require('./player')(connection));
+   app.use(require('./character')(connection));
+});
 
-app.use(require('./index')(null));
-app.use(require('./bracket')(null));
-app.use(require('./player')(null));
-app.use(require('./character')(null));
+// app.use(require('./index')(null));
+// app.use(require('./tournament')(null));
+// app.use(require('./player')(null));
+// app.use(require('./character')(null));

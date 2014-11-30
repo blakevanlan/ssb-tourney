@@ -1,6 +1,14 @@
 .container
    padding: 0 20px 20px 20px
 
+span.success
+   color: #5bb75b
+   font-weight: bold
+   
+span.failure
+   color: #da4f49
+   font-weight: bold
+
 .bracket-column
    width: 20%
    float: left
@@ -8,6 +16,7 @@
    &.one
       .bracket-entry
          height: 36px
+         span.na
          a
             padding-top: 14px
    &.two
@@ -15,6 +24,7 @@
          height: 73px
          &:first-child
             margin-top: -18px
+         span.na
          a
             padding-top: 51px
    &.three
@@ -22,6 +32,7 @@
          height: 147px
          &:first-child
             margin-top: -53px
+         span.na
          a
             padding-top: 125px
    &.four
@@ -29,28 +40,22 @@
          height: 294px
          &:first-child
             margin-top: -120px
+         span.na
          a
             padding-top: 272px
    &.five
       .bracket-entry
          height: 325px
+         span.na
          a
             padding-top: 303px
             
-
-            
-
-   
-
-         
-      
-      
-   
 .bracket-entry
    // height: 35px
    border-bottom: 1px solid #333
    &:nth-child(even)
       border-right: 1px solid #333
+   span.na
    a
       display: block
       padding-left: 5px
@@ -58,7 +63,11 @@
       white-space: nowrap
       overflow: hidden
       text-overflow: ellipsis
+   span.na
+      color: #666
       
       
-      
+.tournamentNew-page
+   select
+      width: 200px
    

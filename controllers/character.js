@@ -7,6 +7,6 @@ module.exports = function (conn) {
    return app;
 };
 
-app.get('/character', function (req, res, next) {
+app.get('/character/:cid', function (req, res, next) {
    res.render('character');
 });

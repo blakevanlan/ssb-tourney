@@ -1,0 +1,13 @@
+extend layout
+
+block content
+   h2 Add Player
+
+   form.form-inline(action="/player/new", method="post")
+      p
+         span Name: 
+         input(type="text", name="name")
+      p
+         button.btn.btn-primary(type="submit") Add Player
+         span &nbsp;
+         a.btn(href="/") Cancel

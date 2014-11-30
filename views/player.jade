@@ -1,8 +1,26 @@
 extend layout
 
-block header
-
 block content
    h2 [player name]
 
-   
+   p.lead
+      | Wins: <span class="success">35</span>, Losses: <span class="failure">26</span><br>
+      | Favorite Character: <a href="/character/fox">Fox</a>
+
+   h3 Recent Matches
+   table.table
+      thead
+         tr
+            th Tournament
+            th Opponent
+            th Character
+            th Outcome
+      tbody
+         tr 
+            td
+               a(href="/bracket/123") Some Tournament
+            td
+               a(href="/player/123") Brad Smith
+            td
+               a(href="/character/123") Fox
+            td Won

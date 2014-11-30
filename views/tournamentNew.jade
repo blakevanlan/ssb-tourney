@@ -1,0 +1,51 @@
+extend layout
+
+block content
+   h2 Create Tournament
+
+   form.form-inline(action="/tournament/new", method="post")
+
+      p
+         span Name: 
+         input(type="text", name="name")
+
+      h3 Players
+      .row-fluid
+         .span6
+            table.table.table-bordered
+               tbody
+                  - var n = 1
+                  while n <= 8
+                     tr 
+                        td= n
+                        td 
+                           select(name="player#{n}")
+                              option(value="1") None
+                              each player, index in players
+                                 option(value=player.pid)= player.name
+                           span &nbsp;
+                           select(name="character#{n++}")
+                              each character, index in characters
+                                 option(value=character.cid)= character.name
+
+         .span6
+            table.table.table-bordered
+               tbody
+                  - var n = 9
+                  while n <= 16
+                     tr 
+                        td= n
+                        td 
+                           select(name="player#{n}")
+                              option(value="1") None
+                              each player, index in players
+                                 option(value=player.pid)= player.name
+                           span &nbsp;
+                           select(name="character#{n++}")
+                              each character, index in characters
+                                 option(value=character.cid)= character.name
+                       
+      p
+         button.btn.btn-primary(type="submit") Create Tournament
+         span &nbsp;
+         a.btn(href="/") Cancel

@@ -1,0 +1,40 @@
+extend layout
+
+block content
+
+   h2= name
+
+   .bracket-column.one
+      each player, index in level1
+         .bracket-entry
+            if player.pid == 1
+               span.na N/A
+            else
+               a(href="/player/#{player.pid}") #{player.name} (#{player.character})
+   .bracket-column.two
+       each player, index in level2
+         .bracket-entry
+            if player.pid == 1
+               span.na N/A
+            else
+               a(href="/player/#{player.pid}") #{player.name} (#{player.character})
+   .bracket-column.three
+       each player, index in level3
+         .bracket-entry
+            if player.pid == 1
+               span.na N/A
+            else
+               a(href="/player/#{player.pid}") #{player.name} (#{player.character})
+   .bracket-column.four
+       each player, index in level4
+         .bracket-entry
+            if player.pid == 1
+               span.na N/A
+            else
+               a(href="/player/#{player.pid}") #{player.name} (#{player.character})
+   .bracket-column.five
+      .bracket-entry
+         if winner
+            a(href="/player/#{winner.pid}") #{winner.name} (#{winner.character})
+         else
+            span.na N/A

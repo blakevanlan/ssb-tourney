@@ -1,9 +1,9 @@
 extend layout
 
-block head
-
 block content   
-   h2 Tournaments
+   h2 
+      | Tournaments 
+      | <a href="/tournament/new">[add]</a>
    table.table
       thead
          tr
@@ -12,10 +12,12 @@ block content
       tbody
          tr 
             td
-               a(href="/bracket") Some Tournament
+               a(href="/tournament") Some Tournament
             td 12
 
-   h2 Players
+   h2 
+      | Players
+      | <a href="/player/new">[add]</a>
    table.table
       thead
          tr
