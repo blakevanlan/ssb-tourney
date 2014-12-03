@@ -15,12 +15,16 @@ app.get('/player/new', function (req, res, next) {
 app.post('/player/new', function (req, res, next) {
    var sql = mysql.format('INSERT INTO player SET?', req.body);
    connection.query(sql, function (err, result) {
-      if (err)
-         console.log('Failed to add player: ', err);
+      if (err) return next(err);
       res.redirect('/');
    });
 });
 
 app.get('/player/:pid', function (req, res, next) {
-   res.render('player');
+   connection.query('SELECT * FROM `player` WHERE pid = ?', req.params.pid,
+         function (err, rows) {
+      if (err) return next(err);
+      if (!(rows && rows.length)) return res.redirect('/');
+      res.render('player', rows[0]);
+   });
 });

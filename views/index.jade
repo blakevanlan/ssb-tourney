@@ -8,12 +8,11 @@ block content
       thead
          tr
             th Name
-            th # Players
       tbody
-         tr 
-            td
-               a(href="/tournament") Some Tournament
-            td 12
+         each tourney in tournaments
+            tr 
+               td
+                  a.capitalize(href="/tournament/#{tourney.tid}")= tourney.name
 
    h2 
       | Players
@@ -26,12 +25,13 @@ block content
             th # Losses
             th Favorite Character
       tbody
-         tr 
-            td 
-               a(href="/player") Blake VanLandingham
-            td 14
-            td 10
-            td Ness
+         each player in players
+            tr 
+               td 
+                  a(href="/player/#{player.pid}")= player.name
+               td 14
+               td 10
+               td Ness
 
    h2 Characters
    table.table

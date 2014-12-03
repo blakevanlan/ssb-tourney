@@ -72,11 +72,14 @@ app.get('/tournament/:tid', function (req, res, next) {
    var sql = 'SELECT p1.pid AS pid1, p1.name AS playerName1, p2.pid AS pid2, p2.name AS playerName2, ' +
          'c1.cid AS cid1, c1.name AS charName1, c2.cid AS cid2, c2.name AS charName2, ' + 
          'm.seed AS seed, m.mid AS mid, o.winner AS winner, o.score AS score, o.time AS time ' +
-         'FROM `match` m, `player` p1, `player` p2, `character` c1, `character` c2 ' +
-         'LEFT JOIN `outcome` o ON o.mid = mid ' +
-         'WHERE p1.pid = m.pid1 AND p2.pid = m.pid2 AND c1.cid = m.cid1 AND c2.cid = m.cid2 AND m.tid = ?';
-          // + 'ORDER BY m.seed DESC';
-   
+         'FROM `match` m ' +
+         'INNER JOIN `player` p1 ON p1.pid = m.pid1 ' +
+         'INNER JOIN `player` p2 ON p2.pid = m.pid2 ' +
+         'INNER JOIN `character` c1 ON c1.cid = m.cid1 ' +
+         'INNER JOIN `character` c2 ON c2.cid = m.cid2 ' +
+         'LEFT JOIN `outcome` o ON o.mid = m.mid ' +
+         'WHERE m.tid = ?';
+
    async.parallel({
       matches: function (done) {
          connection.query(sql, tid, function (err, rows) {
@@ -93,7 +96,7 @@ app.get('/tournament/:tid', function (req, res, next) {
       if (err) return next(err);
       if (!(results.name && results.name.length)) return res.redirect('/');
 
-      // Separate by levels
+      // Separate by levels.
       var level1 = [];
       var level2 = [];
       var level3 = [];
@@ -101,9 +104,9 @@ app.get('/tournament/:tid', function (req, res, next) {
       for (var i = 0; i < results.matches.length; i++) {
          var row = results.matches[i];
          if (row.seed == 1) {
-            extractPlayers(row, level4, 0);
+            extractPlayers(row, level4, 1);
          } else if (row.seed < 4) {
-            extractPlayers(row, level3, 1);
+            extractPlayers(row, level3, 2);
          } else if (row.seed < 8) {
             extractPlayers(row, level2, 4);
          } else {
@@ -115,7 +118,7 @@ app.get('/tournament/:tid', function (req, res, next) {
       fillEmptyPlayer(level3, 4);
       fillEmptyPlayer(level4, 2);
 
-      // Set the winner
+      // Set the winner.
       var winner = null;
       if (level4[0] && level4[0].hasPlayed) {
          winner = {
@@ -130,7 +133,6 @@ app.get('/tournament/:tid', function (req, res, next) {
          };
       }
 
-      console.log(results);
       res.render('tournament', {
          level1: level1,
          level2: level2,
@@ -154,6 +156,7 @@ function extractPlayer(row, num) {
       name: row["playerName" + num],
       cid: row["cid" + num],
       character: row["charName" + num],
+      mid: row.mid,
       hasPlayed: !!row.winner,
       isWinner: row.winner == row["pid" + num],
       score: row.score,
