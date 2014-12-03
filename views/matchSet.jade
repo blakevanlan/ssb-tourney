@@ -1,0 +1,21 @@
+extend layout
+
+block content 
+   h2 #{playerName1} vs #{playerName2}
+
+   form.form-inline(action="/match/#{mid}", method="post")
+      p
+         span Set winner: 
+         select(name="winner")
+            option(value=pid1)= playerName1
+            option(value=pid2)= playerName2
+      p
+         span Score:
+         input(type="text", name="score")
+      p
+         span Time:
+         input(type="text", name="score")
+      p
+         button.btn.btn-primary(type="submit") Submit
+         span &nbsp;
+         a.btn(href="/tournament/#{tid}") Cancel
