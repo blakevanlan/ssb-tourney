@@ -36,6 +36,5 @@ connection.connect(function (err) {
    app.use(require('./index')(connection));
    app.use(require('./tournament')(connection));
    app.use(require('./player')(connection));
-   app.use(require('./character')(connection));
    app.use(require('./match')(connection));
 });

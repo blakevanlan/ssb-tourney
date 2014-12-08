@@ -77,9 +77,8 @@ app.get('/tournament/:tid', function (req, res, next) {
          'INNER JOIN `player` p2 ON p2.pid = m.pid2 ' +
          'INNER JOIN `character` c1 ON c1.cid = m.cid1 ' +
          'INNER JOIN `character` c2 ON c2.cid = m.cid2 ' +
-         'LEFT JOIN `outcome` o ON o.mid = m.mid ' +
+         'LEFT JOIN `outcomes` o ON o.mid = m.mid ' +
          'WHERE m.tid = ?';
-
    async.parallel({
       matches: function (done) {
          connection.query(sql, tid, function (err, rows) {
@@ -113,10 +112,10 @@ app.get('/tournament/:tid', function (req, res, next) {
             extractPlayers(row, level1, 8);
          }
       };
-      fillEmptyPlayer(level1, 16);
-      fillEmptyPlayer(level2, 8);
-      fillEmptyPlayer(level3, 4);
-      fillEmptyPlayer(level4, 2);
+      fillEmptyPlayer(level1, [], 16);
+      fillEmptyPlayer(level2, level1, 8);
+      fillEmptyPlayer(level3, level2, 4);
+      fillEmptyPlayer(level4, level3, 2);
 
       // Set the winner.
       var winner = null;
@@ -164,13 +163,41 @@ function extractPlayer(row, num) {
    }
 }
 
-function fillEmptyPlayer(list, length) {
+function fillEmptyPlayer(list, prev, length) {
    for (var i = 0; i < length; i++) {
       if (!list[i]) {
-         list[i] = {
-            pid: 1,
-            name: "None"
-         };
+         var first = prev[i * 2];
+         var second = prev[(i * 2) + 1];
+         if (first && first.isWinner) {
+            list[i] = {
+               pid: first.pid,
+               name: first.name,
+               cid: first.cid,
+               character: first.character,
+               mid: first.mid,
+               hasPlayed: false,
+               isWinner: false,
+               score: null,
+               time: null
+            };
+         } else if (second && second.isWinner) {
+            list[i] = {
+               pid: second.pid,
+               name: second.name,
+               cid: second.cid,
+               character: second.character,
+               mid: second.mid,
+               hasPlayed: false,
+               isWinner: false,
+               score: null,
+               time: null
+            };
+         } else {
+            list[i] = {
+               pid: 0,
+               name: "None"
+            };   
+         }
       }
    };
 }

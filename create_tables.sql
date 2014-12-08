@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS `match`;
-DROP TABLE IF EXISTS `outcome`;
+DROP TABLE IF EXISTS `outcomes`;
 DROP TABLE IF EXISTS `participant`;
 DROP TABLE IF EXISTS `player`;
 DROP TABLE IF EXISTS `tournament`;
@@ -48,7 +48,7 @@ FOREIGN KEY(`cid1`) REFERENCES character(`cid`) ON DELETE CASCADE ,
 FOREIGN KEY(`cid2`) REFERENCES character(`cid`) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE  IF NOT EXISTS `outcome` (
+CREATE TABLE  IF NOT EXISTS `outcomes` (
 `oid` INT NOT NULL AUTO_INCREMENT ,
 `mid` INT NOT NULL ,
 `winner` INT NOT NULL ,

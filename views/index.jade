@@ -29,9 +29,9 @@ block content
             tr 
                td 
                   a(href="/player/#{player.pid}")= player.name
-               td 14
-               td 10
-               td Ness
+               td= player.wins
+               td= player.losses
+               td= player.charName
 
    h2 Characters
    table.table
@@ -43,8 +43,7 @@ block content
             th Most Played By
       tbody
          tr 
-            td 
-               a(href="/character") Ness
+            td Ness
             td 30
             td 27
             td Blake VanLandingham

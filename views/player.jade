@@ -4,23 +4,16 @@ block content
    h2= name
 
    p.lead
-      | Wins: <span class="success">35</span>, Losses: <span class="failure">26</span><br>
-      | Favorite Character: <a href="/character/fox">Fox</a>
+      | Wins: <span class="success">#{wins}</span>, Losses: <span class="failure">#{losses}</span><br>
+      | Favorite Character: #{charName}
 
-   h3 Recent Matches
+   h3 Tournaments
    table.table
       thead
          tr
-            th Tournament
-            th Opponent
-            th Character
-            th Outcome
+            th Tournament Name
       tbody
-         tr 
-            td
-               a(href="/bracket/123") Some Tournament
-            td
-               a(href="/player/123") Brad Smith
-            td
-               a(href="/character/123") Fox
-            td Won
+         each tourney in tournaments
+            tr 
+               td 
+                  a.capitalize(href="/tournament/#{tourney.tid}") #{tourney.name} Tournament

@@ -18,8 +18,8 @@ app.get('/', function (req, res, next) {
          });
       },
       players: function (done) {
-         connection.query('SELECT * FROM `player` ORDER BY name',
-               function (err, rows) {
+         var sql = 'SELECT  p.pid, p.name, (SELECT Count(*) FROM   `player` pp, `outcomes` o WHERE  pp.pid = p.pid AND    pp.pid = o.winner) AS wins, (SELECT count(*) FROM   `player` pp, `outcomes` o WHERE  pp.pid = p.pid AND    pp.pid = o.loser) AS losses, (SELECT   c.name FROM     `character` c, `participant` pt, `match` mm, `tournament` tt WHERE    p.pid = pt.pid AND pt.tid = tt.tid AND      mm.tid = tt.tid AND      ( ( p.pid = mm.pid1 AND      c.cid = mm.cid1 ) OR       ( p.pid = mm.pid2 AND      c.cid = mm.cid2 ) )GROUP BY c.name ORDER BY count(c.cid) DESC limit 1) AS charName FROM     `player` p ORDER BY p.name';
+         connection.query(sql, function (err, rows) {
             done(err, rows);
          });
       }

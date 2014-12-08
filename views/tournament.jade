@@ -1,12 +1,12 @@
 extend layout
 
 block content
-   h2.capitalize= name
+   h2.capitalize #{name} Tournament
 
    .bracket-column.one
       each player, index in level1
          .bracket-entry
-            if player.pid == 1
+            if player.pid == 0
                span.na N/A
             else
                .player
@@ -17,35 +17,44 @@ block content
    .bracket-column.two
        each player, index in level2
          .bracket-entry
-            if player.pid == 1
+            if player.pid == 0
                span.na N/A
             else
                .player
                   a(href="/player/#{player.pid}") #{player.name} (#{player.character})
             if index % 2 == 1
-               a.match-outcome(class="#{player.hasPlayed ? 'complete': ''}", href="/match/#{player.mid}")
+               if player.mid
+                  a.match-outcome(class="#{player.hasPlayed ? 'complete': ''}", href="/match/#{player.mid}")
+               else 
+                  .match-outcome
 
    .bracket-column.three
        each player, index in level3
          .bracket-entry
-            if player.pid == 1
+            if player.pid == 0
                span.na N/A
             else
                .player
                   a(href="/player/#{player.pid}") #{player.name} (#{player.character})
             if index % 2 == 1
-               a.match-outcome(class="#{player.hasPlayed ? 'complete': ''}", href="/match/#{player.mid}")
+               if player.mid
+                  a.match-outcome(class="#{player.hasPlayed ? 'complete': ''}", href="/match/#{player.mid}")
+               else 
+                  .match-outcome
 
    .bracket-column.four
        each player, index in level4
          .bracket-entry
-            if player.pid == 1
+            if player.pid == 0
                span.na N/A
             else
                .player
                   a(href="/player/#{player.pid}") #{player.name} (#{player.character})
             if index % 2 == 1
-               a.match-outcome(class="#{player.hasPlayed ? 'complete': ''}", href="/match/#{player.mid}")
+               if player.mid
+                  a.match-outcome(class="#{player.hasPlayed ? 'complete': ''}", href="/match/#{player.mid}")
+               else 
+                  .match-outcome
    .bracket-column.five
       .bracket-entry
          if winner

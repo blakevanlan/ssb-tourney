@@ -8,22 +8,5 @@ block content
          span Winner: <span class="success">#{playerName1}</span><br>
       else
          span Winner: <span class="success">#{playerName2}</span><br>
-      span 
-
-   h3 Recent Matches
-   table.table
-      thead
-         tr
-            th Tournament
-            th Opponent
-            th Character
-            th Outcome
-      tbody
-         tr 
-            td
-               a(href="/bracket/123") Some Tournament
-            td
-               a(href="/player/123") Brad Smith
-            td
-               a(href="/character/123") Fox
-            td Won
+      span Score: #{score}<br>
+      span Time: #{time} min
